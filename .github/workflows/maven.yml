@@ -28,5 +28,8 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
-
+      run: mvn -B package --file pom.xml -Drevision=${{ github.run_number }}
+    - name: Move JAR to Deploy Folder
+      run: |
+        mkdir -p deploy
+        mv target/app-${{ github.run_number }}-jar-with-dependencies.jar deploy/
